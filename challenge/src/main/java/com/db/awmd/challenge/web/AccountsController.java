@@ -63,18 +63,19 @@ public class AccountsController {
 	 * @return Http status code 200 OK
 	 */
 	@RequestMapping(value = "/transferAmount", method = RequestMethod.POST)
-	public ResponseEntity<Object> transferAmount(@PathVariable String accountIdFrom, @PathVariable String accountIdTo,
-			@PathVariable BigDecimal amount) {
+	public ResponseEntity<Object> transferAmount(@RequestParam String accountIdFrom, @RequestParam String accountIdTo,
+			@RequestParam @Notn BigDecimal amount) {
 
 		try {
-			// call accountservice to deduct the transfer amount from the payer and to
+			// call accountservice to deduct the transfer amount from the payer
+			// and to
 			// credit the same in payee's account
 			this.accountsService.transferAmount(accountIdFrom, accountIdTo, amount);
-			
+
 			// send the debit notification to the payer
 			this.notificationService.notifyAboutTransfer(this.accountsService.getAccount(accountIdFrom),
 					"Successfully debited the amount " + amount + " to " + accountIdTo);
-			
+
 			// send the credit notification to the payee
 			this.notificationService.notifyAboutTransfer(this.accountsService.getAccount(accountIdTo),
 					"Successfully credited the amount " + amount + " from " + accountIdFrom);

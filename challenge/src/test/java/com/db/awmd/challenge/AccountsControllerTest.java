@@ -126,7 +126,7 @@ public class AccountsControllerTest {
 		String uniqueAccountIdTo = "Id-" + UUID.randomUUID();
 		Account accountFrom = new Account(uniqueAccountIdFrom, new BigDecimal("1000.45"));
 		Account accountTo = new Account(uniqueAccountIdTo, new BigDecimal("500.25"));
-		BigDecimal amount = new BigDecimal(100);
+		BigDecimal amount = new BigDecimal(1100);
 		this.accountsService.transferAmount(accountFrom.getAccountId(), accountTo.getAccountId(), amount);
 
 		mockMvc.perform((RequestBuilder) ((ResultActions) post("/v1/accounts/transferAmount/"))
